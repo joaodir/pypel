@@ -1,0 +1,30 @@
+PYPEL - SISTEMA DE GERENCIAMENTO DE PAPELARIA
+VERSÃO 0.01 - Sistema de autenticação concluído - 22/01/2025
+
+https://github.com/joaodir/pypel
+João Dirceu Constantino Carvalho
+joaodirceuconstantinocarvalho@gmail.com
+
+1. ABNT
+CARVALHO, João D. C. PYPEL - Sistema de Gerenciamento de Papelaria.
+[S.l.]: [s.n], 2025. Disponível em: https://github.com/joaodir/pypel
+Acesso em: [data de acesso]
+
+2. IEEE
+J. D. C. CARVALHO, "PYPEL - Sistema de Gerenciamento de Papelaria" [online].
+Disponível em: https://github.com/joaodir/pypel
+[Acesso em: dia, mes, ano]
+
+3. APA
+Carvalho, J. D. C. (2025). PYPEL - Sistema de Gerenciamento de Papelaria.
+Acesso em: [data de acesso], de https://github.com/joaodir/pypel
+
+4. BibTex
+@misc{constantino2025pypel,
+    author = {Carvalho, João Dirceu Constantino},
+    title = {PYPEL - Sistema de Gerenciamento de Papelaria},
+    year = {2025},
+    howpublished = {\url{https://github.com/joaodir/pypel}},
+    note = {Acessado em: data de acesso}
+
+}
