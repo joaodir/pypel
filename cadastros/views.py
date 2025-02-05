@@ -29,7 +29,29 @@ def departamentos(request):  # funcao para url departamento
         return redirect("core:main")  # vai pra view main de core
 
     if request.method == "POST":
-        messages.sucess(request, "Implementar depois!")
+        acao = request.POST.get("btnAcao")
+
+        if acao == "novo_departamento":
+            nome = request.POST.get("txtNome")
+            if nome == "Geral":
+                messages.error(
+                    request,
+                    'Você não pode cadastrar um departamento chamado "GERAL", use outro!',
+                )
+                return redirect("cadastros:departamentos")
+            sigla = request.POST.get("txtSigla")
+        if Departamento.objects.filter(
+            nome=nome
+        ).exists():  # pra ver se o nome ja existe
+            messages.error(request, "Já existe um departamento com esse nome!")
+            return redirect("cadastros:departamentos")
+
+        departamento = Departamento(nome=nome, sigla=sigla)
+
+        departamento.save()
+
+        messages.success(request, "Departamento cadastrado com sucesso!")
+        return redirect("cadastros:departamentos")
 
     # pegando todos os departamentos menos o geral (dpto "fantasma" criado em commands da pasta sistema)
     departamento_lista = (

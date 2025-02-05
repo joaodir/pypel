@@ -45,8 +45,64 @@
 
     <hr>
 
-    Continuar daqui...
+    <fieldset class="fieldset-custom">
+        <legend id="formLegend">Novo Departamento</legend>
+
+        <form class="needs-validation" method="POST" action="{% url 'cadastros:departamentos' %}" novalidate>
+            {% csrf_token %} <!-- garante segurança com a geração de um token -->
+            <!-- código -->
+            <input type="hidden" name="txtId" id="txtId" value="">
+            <!-- nome -->
+            <div class="form-group row align-items-center has-validation"> 
+                <label for="txtNome" class="col-sm-2 col-form-label text-left">Nome:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="txtNome" placeholder="Digite o nome" id="txtNome" value="" required> <!-- class form-control para validação -->
+                </div>
+                <div class="invalid-feedback text-left"> <!-- customização que fica apagada até dar erro no envio do form -->
+                    O nome é obrigatório!
+                </div>
+            </div>
+            <!-- sigla -->
+            <div class="form-group row align-items-center has-validation"> 
+                <label for="txtSigla" class="col-sm-2 col-form-label text-left">Sigla:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="txtSigla" placeholder="Digite a sigla" id="txtSigla" value="" required> <!-- class form-control para validação -->
+                </div>
+                <div class="invalid-feedback text-left"> <!-- customização fica apagada até dar erro no envio do form -->
+                    A sigla é obrigatória!
+                </div>
+            </div>
+            <!-- acoes -->
+             <div class="form-group row align-items-center">
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-primary" name="btnAcao" id="btnAcao" value="novo_departamento">Salvar novo departamento</button>
+                </div>
+             </div>
+        </form>
+
+    </fieldset>
 </div>
+
+<!-- scripts especificos do cadastro de departamentos -->
+<script>
+    $('document').ready(function() {
+        (() => {
+            'use strict'
+            //carrega os formularios do bootstrap que tem validacao customizada
+            const forms = document.querySelectorAll('.needs-validation')
+            //loop nesses formularios para evitar o envio do formulário se ele nao for valido
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })();
+    });
+</script>
 
 {% endblock %}
 
