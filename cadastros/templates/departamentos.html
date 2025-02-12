@@ -75,6 +75,12 @@
             <!-- acoes -->
              <div class="form-group row align-items-center">
                 <div class="col-sm-12 text-right">
+
+                    <a href="{% url 'cadastros:departamentos' %}" class="btn btn-info" id="btnNovoDepartamento" style="display: none">
+                        <img src="{% static 'img/create.png' %}" width="20" height="20" alt="Voltar ao modo de inclusão">
+                        Voltar ao modo de inclusão
+                    </a>
+
                     <button type="submit" class="btn btn-primary" name="btnAcao" id="btnAcao" value="novo_departamento">Salvar novo departamento</button>
                 </div>
              </div>
@@ -85,7 +91,46 @@
 
 <!-- scripts especificos do cadastro de departamentos -->
 <script>
+
+    //funcao para carregar os dados do dpto no form
+    function carregaDadosDepartamento(departamento_id) {
+        $.ajax({
+            url: '{% url "cadastros:obter_departamento_por_id" %}',
+            data: {
+                departamento_id: departamento_id
+            },
+            dataType: 'json',
+            success: function(departamento_dados){ //json de nome departamento_dados
+                $('#txtId').val(departamento_dados.id);
+                $('#txtNome').val(departamento_dados.nome);
+                $('#txtSigla').val(departamento_dados.sigla);
+
+                $('#formLegend').text('Alterar departamento');
+                $('#btnAcao').text('Alterar departamento').val('alterar_departamento');
+                $('#btnNovoDepartamento').show();
+            }
+        });
+    }
+
+
+    //click na linha do grid
+    function clickNoGrid() {
+        $('.departamento-row').click(function(){
+            $('.departamento-row').removeClass('table-primary table-bordered');
+            $(this).addClass('table-primary table-bordered');
+
+            var departamento_id = $(this).data('id');
+            carregaDadosDepartamento(departamento_id);
+        });
+    }
+
+    //quando o documento carregar
+    //funcao que carrega as funcoes e eventos da pagina
     $('document').ready(function() {
+
+        //anexa o evento de click ao grid
+        clickNoGrid();
+
         (() => {
             'use strict'
             //carrega os formularios do bootstrap que tem validacao customizada
