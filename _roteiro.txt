@@ -14,3 +14,14 @@
 
 11) criar a master.html dentro da pasta templates de core
 12) criar a main.html dentro da pasta templates de core
+
+13) criar os arquivos install.txt, version.txt e structure.txt
+14) elaborar os mockups das telas de cadastro no pencil/figma e salvar na pasta _mockups dentro do projeto
+
+CADASTRO DE DEPARTAMENTOS
+15) Incluir o acesso ao cadastro com link apenas para administradores na master.html
+16) Checar se os dados de departamento, perfil e usuários estão corretos em models.py do app cadastros
+17) Adicionar o arquivo urls.py no app cadastro com suas urls que vão nos permitir acessar as views deste app
+18) Adicionar o acesso ao urls.py do app cadastro nas urls do app config com include
+19) Implementar as views do cadastro de relatorio no app cadastro
+20) Implementar os arquivos departamentos.html e departamentos_table.html

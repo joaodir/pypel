@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Funcionários</title>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/html-docx.min.js' %}"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            width: 20cm;
+            height: 28.7cm;
+            page-break-after: always;
+            justify-content: center;
+            align-items: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 3px;
+            text-align: left;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        a {
+            text-decoration: none;  
+            color: inherit;         
+        }
+        a:hover {
+            text-decoration: none;  
+            color: gray;         
+        }
+        th.title, td.title {
+            border: 0px;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        th.title_footer, td.title_footer {
+            border: 0px;
+            padding: 0px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 5px;
+        }
+        .button-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        @media print {
+            .button-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if funcionarios_lista|length == 0 %}
+        <span class="alert alert-warning text-muted">Nenhum funcionário cadastrado.</span><br><br>
+        <button class="btn btn-primary" onclick="window.history.back();">Voltar</button>
+    {% else %}
+        <div class="button-container mb-4">
+            <button class="btn btn-secondary" id="btnImprimir">
+                <img src="{% static 'img/rel_print.png' %}" alt="Imprimir ou gerar PDF" width="30" height="30">
+                Imprimir ou gerar PDF
+            </button>
+            <button class="btn btn-primary" id="btnExportarParaWord">
+                <img src="{% static 'img/rel_word.png' %}" alt="Word" width="30" height="30">
+                Exportar para Word
+            </button>
+            <button class="btn btn-outline-success" onclick="window.history.back();">
+                <img src="{% static 'img/back.png' %}" alt="Voltar" width="30" height="30">
+            </button>
+        </div>
+
+        <h3 style="text-align:center;">Relatório de Funcionários</h3>
+
+        <table>
+            <tr style="background-color: #f2f2f2;">
+                <th style="text-align:center;">Nome</th>
+                <th style="text-align:center;">E-mail</th>
+                <th style="text-align:center;">Departamento</th>
+            </tr>
+            {% for func in funcionarios_lista %}
+            <tr>
+                <td style="text-align:center;">{{ func.nome }}</td>
+                <td style="text-align:center;">{{ func.email }}</td>
+                <td style="text-align:center;">{{ func.departamento.nome }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="page-break"></div>
+    {% endif %}
+
+    <script>
+        document.getElementById('btnImprimir').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('btnExportarParaWord').addEventListener('click', function() {
+            const content = document.querySelector('body').cloneNode(true);
+        
+            // Remove os botões
+            const buttons = content.querySelector('.button-container');
+            if (buttons) {
+                buttons.remove();
+            }
+        
+            const htmlContent = `
+            <html xmlns:o='urn:schemas-microsoft-com:office:office'
+                    xmlns:w='urn:schemas-microsoft-com:office:word'
+                    xmlns='http://www.w3.org/TR/REC-html40'>
+            <head>
+            <title>Disciplinas por Eixos</title>
+            <style>
+                table { 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin-bottom: 0px;
+                    font-size: 12px; 
+                }
+                th, td { 
+                    border: 1px solid black; 
+                    padding: 3px; 
+                    text-align: left; 
+                }
+                .page-break { 
+                    display: block; 
+                    page-break-before: always; 
+                }
+                th.title, td.title {
+                    border: 0px;
+                    padding: 0px;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 12px;
+                }
+                th.title_footer, td.title_footer {
+                    border: none;
+                    padding: 0px;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 5px;
+                }   
+            </style>
+            </head><body>${content.innerHTML}</body></html>`;
+        
+            const converted = window.htmlDocx.asBlob(htmlContent);
+            const url = URL.createObjectURL(converted);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'funcionarios.doc';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>

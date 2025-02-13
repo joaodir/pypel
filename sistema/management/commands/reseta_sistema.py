@@ -8,7 +8,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         cursor = connection.cursor()
-        # obtem apenas as tabelas do aplicativo 'cadastros'
+        # obtem apenas as tabelas do aplicativo cadastros
         app_labels = ['cadastros']
         tables = [table for table in connection.introspection.table_names() if any(app in table for app in app_labels)]
         

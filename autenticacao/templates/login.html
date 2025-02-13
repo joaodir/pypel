@@ -59,29 +59,7 @@
 
         $('#btnEsqueciSenha').click(function(event) {
             event.preventDefault();
-            const email = $('#txtEmail').val();
-            if (!email) {
-                toastr.error('Por favor, insira seu email.');
-                return;
-            }
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'autenticacao:recuperar_senha' %}",
-                data: {
-                    email: email,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        toastr.success(response.message);
-                    } else {
-                        toastr.error(response.message);
-                    }
-                },
-                error: function() {
-                    toastr.error('Ocorreu um erro ao tentar recuperar a senha.');
-                }
-            });
+            toastr.info('Se você esqueceu sua senha contate o administrador do sistema.');
         });
     });
 </script>

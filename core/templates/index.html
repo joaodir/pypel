@@ -1,4 +1,4 @@
-{% load static %}<!-- "carregue os arquivos estaticos" -->
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,7 +20,7 @@
     <div class="container-fluid vh-100 d-flex flex-column">
         <div class="row flex-grow-1">
             <div class="col col-blue d-flex flex-column justify-content-center" style="background-color: #efc9c9">
-                <!-- Conteúdo carregado dinamicamente -->
+                <!-- conteudo carregado dinamicamente -->
                 <div class="content">
                     {% block conteudo %}
                     {% endblock %}
@@ -89,48 +89,46 @@
         </div>
     </div>
 
-<!-- aqui fica as configuracoes daquelas mensagens de sucesso, error, ... -->
-<script> 
-    $(document).ready(function () { //quando carregar o documento faz essa funcao
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "3000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        };
+    <script>
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
 
-        {% if messages %}
-            {% for message in messages %}
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                    toastr.error("{{ message }}", "Erro");
-                {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                    toastr.success("{{ message }}", "Sucesso");
-                {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
-                    toastr.warning("{{ message }}", "Aviso");
-                {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                    toastr.info("{{ message }}", "Atenção");
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        toastr.error("{{ message }}", "Erro");
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        toastr.success("{{ message }}", "Sucesso");
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                        toastr.warning("{{ message }}", "Aviso");
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                        toastr.info("{{ message }}", "Atenção");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
 
-        //sobre - esse $ é como se tivesse chamando o componente(getElementByTalCoisa)
-        $('#btnSobre').click(function() { // ta chamando o componente com o id btnSobre e 
-                                          // acessando a funcao onclick(.click) falando pra fazer essa funcao
-            $('#jnlSobre').modal('show');
+            //sobre
+            $('#btnSobre').click(function() {
+                $('#jnlSobre').modal('show');
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>

@@ -1,141 +1,213 @@
 {% extends 'master.html' %}
-{% comment %} carrega a pasta static {% endcomment %}
-{% load static%} 
+{% load static %}
 
-{% comment %} conteudo que carrega dentro da master {% endcomment %}
-{% block conteudo%} 
+{% block conteudo %}
 
 <br>
 
-<div class="container">
+<div class="container">   
+
     <div class="form-group row align-items-center mb-4">
         <div class="col-12 text-center">
-            <h1 class="display-5 font-weight-bold text-primary"> Cadastro de Departamentos </h1>
+            <h1 class="display-5 font-weight-bold text-primary">
+                <i class="fas fa-book-open"></i> Cadastro de Departamentos
+            </h1>
             <hr class="mt-2 mb-3 border-primary">
         </div>
-    </div>
+    </div>   
     <fieldset class="fieldset-custom">
         <legend>
             {% if page_obj.paginator.count == 0 %}
-                Nenhum registro encontrado
+                Nenhum registro cadastrado
             {% elif page_obj.paginator.count == 1 %}
                 1 registro encontrado
             {% else %}
-                {{page_obj.paginator.count}} registros encontrados
+                {{ page_obj.paginator.count }} registros encontrados
             {% endif %}
         </legend>
 
         <div class="form-group row align-items-center">
             <div class="col-auto">
-                <img src="{% static "img/search.png" %}}" width="20px" height="20px" alt="Pesquisar">
+                <img src="{% static 'img/search.png' %}" alt="icone de uma lupa" width="20" height="20">
             </div>
             <div class="text-left">
                 <label for="txtBuscaNome" class="col-form-label">Pesquisar por nome:</label>
             </div>
             <div class="col">
-                <input type="text" class="form-control" id="txtBuscaNome" placeholder="Digite o nome do departamento" value="{{ query }}">
+                <input type="text" class="form-control" id="txtBuscaNome" placeholder="Digite o nome" value="{{ query }}">
             </div>
-        </div>
+        </div>                
+
         <div id="departamentos-table">
             {% include 'departamentos_table.html' %}
-
         </div>
-
     </fieldset>
 
     <hr>
 
     <fieldset class="fieldset-custom">
-        <legend id="formLegend">Novo Departamento</legend>
-
-        <form class="needs-validation" method="POST" action="{% url 'cadastros:departamentos' %}" novalidate>
-            {% csrf_token %} <!-- garante segurança com a geração de um token -->
-            <!-- código -->
+        <legend id="formLegend">Novo departamento</legend>
+        
+        <form class="needs-validation" method="POST" action="{% url 'cadastros:departamentos' %}" novalidate> 
+            {% csrf_token %}
+            <!-- codigo -->
             <input type="hidden" name="txtId" id="txtId" value="">
             <!-- nome -->
-            <div class="form-group row align-items-center has-validation"> 
+            <div class="form-group row align-items-center has-validation">
                 <label for="txtNome" class="col-sm-2 col-form-label text-left">Nome:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="txtNome" placeholder="Digite o nome" id="txtNome" value="" required> <!-- class form-control para validação -->
-                </div>
-                <div class="invalid-feedback text-left"> <!-- customização que fica apagada até dar erro no envio do form -->
-                    O nome é obrigatório!
+                    <input type="text" class="form-control" name="txtNome" id="txtNome" placeholder="Digite o nome" value="" required>
+                    <div class="invalid-feedback text-left">
+                        O nome é obrigatório.
+                    </div>
                 </div>
             </div>
             <!-- sigla -->
-            <div class="form-group row align-items-center has-validation"> 
+            <div class="form-group row align-items-center has-validation">
                 <label for="txtSigla" class="col-sm-2 col-form-label text-left">Sigla:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="txtSigla" placeholder="Digite a sigla" id="txtSigla" value="" required> <!-- class form-control para validação -->
+                    <input type="text" class="form-control" name="txtSigla" id="txtSigla" placeholder="Digite a sigla" value="" required>
+                    <div class="invalid-feedback text-left">
+                        A sigla é um número inteiro obrigatório com no máximo 30 caracteres.
+                    </div>
                 </div>
-                <div class="invalid-feedback text-left"> <!-- customização fica apagada até dar erro no envio do form -->
-                    A sigla é obrigatória!
+            </div>            
+            <!-- acoes -->                                 
+            <div class="form-group row align-items-center">
+                <div class="col-sm-12 text-right">
+                    <a href="{% url 'cadastros:departamentos'%}" class="btn btn-info" id="btnNovoDepartamento" style="display: none;">
+                        <img src="{% static 'img/create.png' %}" alt="Voltar ao modo de inclusão" width="20" height="20"> Voltar ao modo de inclusão
+                    </a>
+                    <button type="submit" class="btn btn-primary" name="btnAcao" id="btnAcao" value="novo_departamento">Salvar Novo Departamento</button>
                 </div>
             </div>
-            <!-- acoes -->
-             <div class="form-group row align-items-center">
-                <div class="col-sm-12 text-right">
-
-                    <a href="{% url 'cadastros:departamentos' %}" class="btn btn-info" id="btnNovoDepartamento" style="display: none">
-                        <img src="{% static 'img/create.png' %}" width="20" height="20" alt="Voltar ao modo de inclusão">
-                        Voltar ao modo de inclusão
-                    </a>
-
-                    <button type="submit" class="btn btn-primary" name="btnAcao" id="btnAcao" value="novo_departamento">Salvar novo departamento</button>
-                </div>
-             </div>
         </form>
-
     </fieldset>
+
 </div>
 
-<!-- scripts especificos do cadastro de departamentos -->
+<!-- janela de exclusao -->
+<div class="modal fade" id="jnlExcluir" tabindex="-1" role="dialog" aria-labelledby="jnlExcluirRotulo" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jnlExcluirRotulo">Confirmação de Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Deseja mesmo excluir?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="jnlExcluirBtnExcluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
 <script>
 
-    //funcao para carregar os dados do dpto no form
-    function carregaDadosDepartamento(departamento_id) {
-        $.ajax({
-            url: '{% url "cadastros:obter_departamento_por_id" %}',
-            data: {
-                departamento_id: departamento_id
-            },
-            dataType: 'json',
-            success: function(departamento_dados){ //json de nome departamento_dados
-                $('#txtId').val(departamento_dados.id);
-                $('#txtNome').val(departamento_dados.nome);
-                $('#txtSigla').val(departamento_dados.sigla);
+    $(document).ready(function () {
 
-                $('#formLegend').text('Alterar departamento');
-                $('#btnAcao').text('Alterar departamento').val('alterar_departamento');
-                $('#btnNovoDepartamento').show();
-            }
+        //carrega os dados do departamento de forma assincrona
+        function carregaDadosDepartamento(departamento_id) {
+            $.ajax({
+                url: '{% url "cadastros:obter_departamento_por_id" %}',
+                data: {
+                    'departamento_id': departamento_id
+                },
+                dataType: 'json',
+                success: function (departamento_dados) {
+                    $('#txtId').val(departamento_dados.id);
+                    $('#txtNome').val(departamento_dados.nome);
+                    $('#txtSigla').val(departamento_dados.sigla);
+
+                    $('#formLegend').text('Alterar departamento');
+                    $('#btnAcao').text('Alterar departamento').val('alterar_departamento');
+                    $('#btnNovoDepartamento').show();
+                }
+            });
+        }
+
+        //clique na linha da tabela para selecionar
+        function clickNoGrid() {
+            $('.departamento-row').click(function() {
+                $('.departamento-row').removeClass('table-primary table-bordered');
+                $(this).addClass('table-primary table-bordered');
+
+                var departamento_id = $(this).data('id');
+                carregaDadosDepartamento(departamento_id);
+            });
+
+            $('.delete-btn').click(function() {
+                apagarDepartamentoPorID = $(this).data('id');
+                $('#jnlExcluir').modal('show');
+            });
+        }
+
+        //manipulacao do botao de exclusao
+        let apagarDepartamentoPorID;
+        $('.delete-btn').click(function() {
+            apagarDepartamentoPorID = $(this).data('id');
+            $('#jnlExcluir').modal('show');
         });
-    }
 
-
-    //click na linha do grid
-    function clickNoGrid() {
-        $('.departamento-row').click(function(){
-            $('.departamento-row').removeClass('table-primary table-bordered');
-            $(this).addClass('table-primary table-bordered');
-
-            var departamento_id = $(this).data('id');
-            carregaDadosDepartamento(departamento_id);
+        $('#jnlExcluirBtnExcluir').click(function() {
+            $.ajax({
+                url: '{% url "cadastros:excluir_departamento" %}',
+                method: 'POST',
+                data: {
+                    'departamento_id': apagarDepartamentoPorID,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        location.reload();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                    $('#jnlExcluir').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    toastr.error('Erro ao excluir o departamento.');
+                    $('#jnlExcluir').modal('hide');
+                }
+            });
         });
-    }
 
-    //quando o documento carregar
-    //funcao que carrega as funcoes e eventos da pagina
-    $('document').ready(function() {
+        //filtra por nome
+        function filtraDepartamentoPorNome() {
+            let departamento_nome = $('#txtBuscaNome').val();
+            $.ajax({
+                url: '{% url "cadastros:pesquisar_departamento_por_nome" %}',
+                data: {
+                    'departamento_nome': departamento_nome
+                },
+                success: function(data) {
+                    $('#departamentos-table').html(data.html);
+                    clickNoGrid(); //reanexa o evento de clique apos a atualizacao da tabela
+                }
+            });
+        }
 
-        //anexa o evento de click ao grid
-        clickNoGrid();
+        //evento de input na caixa de texto de pesquisa
+        $('#txtBuscaNome').on('input', function () {
+            filtraDepartamentoPorNome();
+        });
+
+        //anexa o evento de clique nas linhas da tabela ao carregar a pagina
+        clickNoGrid(); 
 
         (() => {
             'use strict'
             //carrega os formularios do bootstrap que tem validacao customizada
             const forms = document.querySelectorAll('.needs-validation')
-            //loop nesses formularios para evitar o envio do formulário se ele nao for valido
+            //loop nesses formularios para evitar o envio do formulario se ele nao for valido
             Array.from(forms).forEach(form => {
                 form.addEventListener('submit', event => {
                     if (!form.checkValidity()) {
@@ -150,4 +222,3 @@
 </script>
 
 {% endblock %}
-

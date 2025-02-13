@@ -1,46 +1,65 @@
 .
+├── _mockups
+│   ├── cadastros.epgz
+│   └── cadastros.pdf
+├── _roteiro.txt
 ├── autenticacao
+│   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
-│   ├── __init__.py
 │   ├── migrations
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates
-│   │   ├── esqueci_senha.html
 │   │   └── login.html
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
 ├── cadastros
+│   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
 │   ├── backends.py
-│   ├── __init__.py
 │   ├── migrations
 │   │   ├── 0001_initial.py
+│   │   ├── 0002_atividade.py
+│   │   ├── 0003_remove_atividade_tempo.py
 │   │   └── __init__.py
 │   ├── models.py
+│   ├── templates
+│   │   ├── atividades.html
+│   │   ├── atividades_add_coordenadores.html
+│   │   ├── atividades_add_coordenadores_table.html
+│   │   ├── atividades_table.html
+│   │   ├── departamentos.html
+│   │   ├── departamentos_table.html
+│   │   ├── usuarios.html
+│   │   └── usuarios_table.html
+│   ├── templatetags
+│   │   ├── __init__.py
+│   │   └── custom_filters.py
 │   ├── tests.py
+│   ├── urls.py
 │   └── views.py
 ├── config
-│   ├── asgi.py
 │   ├── __init__.py
+│   ├── asgi.py
 │   ├── middleware.py
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
 ├── core
+│   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
-│   ├── __init__.py
 │   ├── migrations
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates
 │   │   ├── index.html
 │   │   ├── main.html
-│   │   └── master.html
+│   │   ├── master.html
+│   │   └── master_modal.html
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
@@ -57,16 +76,16 @@
 │       ├── img
 │       │   ├── active.png
 │       │   ├── admin.png
-│       │   ├── background.png
 │       │   ├── back.png
+│       │   ├── background.png
 │       │   ├── bloom.png
 │       │   ├── closed_eye.png
 │       │   ├── coordenator.png
 │       │   ├── create.png
 │       │   ├── creativecommons.png
 │       │   ├── danger.png
-│       │   ├── delete_disabled.png
 │       │   ├── delete.png
+│       │   ├── delete_disabled.png
 │       │   ├── django.png
 │       │   ├── favicon.png
 │       │   ├── github.png
@@ -84,8 +103,8 @@
 │       │   ├── new_editor.png
 │       │   ├── new_req.png
 │       │   ├── new_rule.png
-│       │   ├── opened_eye.png
 │       │   ├── open.png
+│       │   ├── opened_eye.png
 │       │   ├── postgresql.png
 │       │   ├── python.png
 │       │   ├── rel_eixos.png
@@ -117,11 +136,10 @@
 │           ├── jquery-3.5.1.min.js
 │           ├── popper.min.js
 │           └── toastr.min.js
-├── _roteiro.txt
 ├── sistema
+│   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
-│   ├── __init__.py
 │   ├── management
 │   │   └── commands
 │   │       ├── inicializa_sistema.py
@@ -133,7 +151,7 @@
 │   ├── models.py
 │   ├── tests.py
 │   └── views.py
-├── structure.txt~
+├── structure.txt
 └── version.txt
 
-18 directories, 118 files
+22 directories, 133 files

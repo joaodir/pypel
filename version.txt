@@ -1,30 +1,25 @@
 PYPEL - SISTEMA DE GERENCIAMENTO DE PAPELARIA
-VERSÃO 0.01 - Sistema de autenticação concluído - 22/01/2025
+VERSÃO 1.00 - sistema de autenticação concluído - 12/02/2025
 
-https://github.com/joaodir/pypel
-João Dirceu Constantino Carvalho
-joaodirceuconstantinocarvalho@gmail.com
+https://github.com/ciniro/pypel
+Ciniro Aparecido Leite Nametala
+ciniro@gmail.com
 
 1. ABNT
-CARVALHO, João D. C. PYPEL - Sistema de Gerenciamento de Papelaria.
-[S.l.]: [s.n], 2025. Disponível em: https://github.com/joaodir/pypel
-Acesso em: [data de acesso]
+Nametala, Ciniro Aparecido Leite. PYPEL - Sistema de Gerenciamento de Papelaria. [S.l.]: [s.n.], 2025. Disponível em: https://github.com/ciniro/pypel. Acesso em: [data de acesso].
 
 2. IEEE
-J. D. C. CARVALHO, "PYPEL - Sistema de Gerenciamento de Papelaria" [online].
-Disponível em: https://github.com/joaodir/pypel
-[Acesso em: dia, mes, ano]
+C. A. L. Nametala, "PYPEL - Sistema de Gerenciamento de Papelaria," [Online]. Disponível em: https://github.com/ciniro/pypel. [Acesso em: dia, mês, ano].
+
 
 3. APA
-Carvalho, J. D. C. (2025). PYPEL - Sistema de Gerenciamento de Papelaria.
-Acesso em: [data de acesso], de https://github.com/joaodir/pypel
+Nametala, C. A. L. (2025). PYPEL - Sistema de Gerenciamento de Papelaria. Acesso em [data de acesso], de https://github.com/ciniro/pypel.
 
-4. BibTex
-@misc{constantino2025pypel,
-    author = {Carvalho, João Dirceu Constantino},
-    title = {PYPEL - Sistema de Gerenciamento de Papelaria},
-    year = {2025},
-    howpublished = {\url{https://github.com/joaodir/pypel}},
-    note = {Acessado em: data de acesso}
-
+4. BibTeX
+@misc{nametala2025pypel,
+  author = {Nametala, Ciniro Aparecido Leite},
+  title = {PYPEL - Sistema de Gerenciamento de Papelaria},
+  year = {2025},
+  howpublished = {\url{https://github.com/ciniro/pypel}},
+  note = {Acessado em: data de acesso}
 }

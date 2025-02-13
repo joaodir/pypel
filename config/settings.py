@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "core",
     "cadastros",
     "sistema",
+    "relatorios",
 ]
 
 MIDDLEWARE = [
@@ -58,20 +59,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# integra com o sistema de auth padrao do Django
-AUTH_USER_MODEL = "cadastros.Usuario"
+#integra com o sistema de auth padrao do Django
+AUTH_USER_MODEL = 'cadastros.Usuario' 
 AUTHENTICATION_BACKENDS = [
-    "cadastros.backends.EmailBackend",  # backend de autenticacao personalizado
-    "django.contrib.auth.backends.ModelBackend",  # backend de autenticacao padrao
+    'cadastros.backends.EmailBackend',  #backend de autenticacao personalizado
+    'django.contrib.auth.backends.ModelBackend',  #backend de autenticacao padrao
 ]
 
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(BASE_DIR, "resources")
-        ],  # define o caminho da pasta que tera os recursos usados pelos templates
+        "DIRS": [os.path.join(BASE_DIR, "resources")], #define o caminho da pasta que tera os recursos usados pelos templates
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -84,10 +83,10 @@ TEMPLATES = [
     },
 ]
 
-# URL de redirecionamento apos login
-LOGIN_REDIRECT_URL = "core:main"
-LOGOUT_REDIRECT_URL = "autenticacao:login"
-LOGIN_URL = "autenticacao:login"
+#URL de redirecionamento apos login
+LOGIN_REDIRECT_URL = 'core:main'
+LOGOUT_REDIRECT_URL = 'autenticacao:login'
+LOGIN_URL = 'autenticacao:login'
 
 WSGI_APPLICATION = "config.wsgi.application"
 
@@ -96,23 +95,23 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "db_pypel",
-        "USER": "postgres",
-        "PASSWORD": "root",
-        "HOST": "localhost",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_pypel',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': 'localhost', 
+        'PORT': '5432',
     }
 }
 
 # Settings for messages
 MESSAGE_TAGS = {
-    messages.DEBUG: "debug",
-    messages.INFO: "info",
-    messages.SUCCESS: "success",
-    messages.WARNING: "warning",
-    messages.ERROR: "danger",
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
 }
 
 # Password validation
@@ -150,8 +149,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
 STATIC_URL = "/static/"
@@ -164,14 +163,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Configurações de variáveis globais
+#Configurações de variáveis globais
 NUMBER_GRID_PAGES = 3
 NUMBER_GRID_MODAL = 3
 
-# Configurações de email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "joaodirceuconstantinocarvalho@gmail.com"
-EMAIL_HOST_PASSWORD = "zzzg gemx fgwh yoyr"
